@@ -1,0 +1,444 @@
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 13
+Server version: 8.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create database company;
+Query OK, 1 row affected (0.03 sec)
+
+mysql> use company;
+Database changed
+mysql> create table client_master;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table client_master (clientNo,name,Address,city,state,Bal_due);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ',name,Address,city,state,Bal_due)' at line 1
+mysql> create table client_master (clientNo int(6),name varchar(30),Address varchar(20),city varchar(56),state varchar(30),Bal_due int(45));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> insert into client_master values('01','shukuru','kinihira','base','rwanda','6000');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into client_master values('02','Rukundo','bitoki','bujumbura','burundi','4500');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into client_master values('02','munguyiko','katunda','mombasa','tanzania','7000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into client_master values('03','mukama','kishenyi','kampala','uganda','5000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into client_master values('C123','meleki','runda','kasese','nairobi','2000');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> insert into client_master values('D231','rehema','rondon','terere','togo','9000');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from client_master;
++----------+-----------+----------+-----------+----------+---------+
+| clientNo | name      | Address  | city      | state    | Bal_due |
++----------+-----------+----------+-----------+----------+---------+
+|        1 | shukuru   | kinihira | base      | rwanda   |    6000 |
+|        2 | Rukundo   | bitoki   | bujumbura | burundi  |    4500 |
+|        2 | munguyiko | katunda  | mombasa   | tanzania |    7000 |
+|        3 | mukama    | kishenyi | kampala   | uganda   |    5000 |
+|        0 | meleki    | runda    | kasese    | nairobi  |    2000 |
+|        0 | rehema    | rondon   | terere    | togo     |    9000 |
++----------+-----------+----------+-----------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select name from client_masterwher bal_due>5000;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '>5000' at line 1
+mysql> select name from client_master where bal_due>5000;
++-----------+
+| name      |
++-----------+
+| shukuru   |
+| munguyiko |
+| rehema    |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table client_master modify clientNo charchar (40);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'charchar (40)' at line 1
+mysql> alter table client_master modify clientNo varchar(40);
+Query OK, 6 rows affected (0.04 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> select * from client_master;
++----------+-----------+----------+-----------+----------+---------+
+| clientNo | name      | Address  | city      | state    | Bal_due |
++----------+-----------+----------+-----------+----------+---------+
+| 1        | shukuru   | kinihira | base      | rwanda   |    6000 |
+| 2        | Rukundo   | bitoki   | bujumbura | burundi  |    4500 |
+| 2        | munguyiko | katunda  | mombasa   | tanzania |    7000 |
+| 3        | mukama    | kishenyi | kampala   | uganda   |    5000 |
+| 0        | meleki    | runda    | kasese    | nairobi  |    2000 |
+| 0        | rehema    | rondon   | terere    | togo     |    9000 |
++----------+-----------+----------+-----------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> insert into  client_master value('C123','meleki','runda','kasese','nairobi','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  client_master value('d231','rehema','rondon','terere','togo','9000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from client_master;
++----------+-----------+----------+-----------+----------+---------+
+| clientNo | name      | Address  | city      | state    | Bal_due |
++----------+-----------+----------+-----------+----------+---------+
+| 1        | shukuru   | kinihira | base      | rwanda   |    6000 |
+| 2        | Rukundo   | bitoki   | bujumbura | burundi  |    4500 |
+| 2        | munguyiko | katunda  | mombasa   | tanzania |    7000 |
+| 3        | mukama    | kishenyi | kampala   | uganda   |    5000 |
+| 0        | meleki    | runda    | kasese    | nairobi  |    2000 |
+| 0        | rehema    | rondon   | terere    | togo     |    9000 |
+| C123     | meleki    | runda    | kasese    | nairobi  |    2000 |
+| d231     | rehema    | rondon   | terere    | togo     |    9000 |
++----------+-----------+----------+-----------+----------+---------+
+8 rows in set (0.00 sec)
+
+mysql> delete from client_master where clientNo=0;
+Query OK, 4 rows affected, 2 warnings (0.00 sec)
+
+mysql> delete from client_master where bal_due=4500;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from client_master;
++----------+-----------+----------+---------+----------+---------+
+| clientNo | name      | Address  | city    | state    | Bal_due |
++----------+-----------+----------+---------+----------+---------+
+| 1        | shukuru   | kinihira | base    | rwanda   |    6000 |
+| 2        | munguyiko | katunda  | mombasa | tanzania |    7000 |
+| 3        | mukama    | kishenyi | kampala | uganda   |    5000 |
++----------+-----------+----------+---------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into  client_master value('d231','rehema','rondon','terere','togo','9000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  client_master value('C123','meleki','runda','kasese','nairobi','2000');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from client_master;
++----------+-----------+----------+---------+----------+---------+
+| clientNo | name      | Address  | city    | state    | Bal_due |
++----------+-----------+----------+---------+----------+---------+
+| 1        | shukuru   | kinihira | base    | rwanda   |    6000 |
+| d231     | rehema    | rondon   | terere  | togo     |    9000 |
+| 2        | munguyiko | katunda  | mombasa | tanzania |    7000 |
+| 3        | mukama    | kishenyi | kampala | uganda   |    5000 |
+| C123     | meleki    | runda    | kasese  | nairobi  |    2000 |
++----------+-----------+----------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select name from client_master where bal_due>5000;
++-----------+
+| name      |
++-----------+
+| shukuru   |
+| rehema    |
+| munguyiko |
++-----------+
+3 rows in set (0.00 sec)
+
+mysql> update client_master set bal_due='5100' where clientNo='C123';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from client_master;
++----------+-----------+----------+---------+----------+---------+
+| clientNo | name      | Address  | city    | state    | Bal_due |
++----------+-----------+----------+---------+----------+---------+
+| 1        | shukuru   | kinihira | base    | rwanda   |    6000 |
+| d231     | rehema    | rondon   | terere  | togo     |    9000 |
+| 2        | munguyiko | katunda  | mombasa | tanzania |    7000 |
+| 3        | mukama    | kishenyi | kampala | uganda   |    5000 |
+| C123     | meleki    | runda    | kasese  | nairobi  |    5100 |
++----------+-----------+----------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> alter table client_master rename client12;
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> use company;
+Database changed
+mysql> create table departments (departments_id int(8),dept name varchar(45),manager_id varchar(54),salary int(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'name varchar(45),manager_id varchar(54),salary int(50)' at line 1
+mysql> create table departments (departments_id int(8),dept_name varchar(45),manager_id varchar(54),salary int(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table departments (departments_id int(8),dept_name varchar(45),manager_id int(54),salary int(50);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> create table departments (departments_id int(8),dept_name varchar(45),manager_id int(54),salary int(50));
+Query OK, 0 rows affected, 3 warnings (0.04 sec)
+
+mysql> create table departments (departments_id int(8),dept_name varchar(45),manager_id int(54),salary int(50),manager_name varchar(60));
+ERROR 1050 (42S01): Table 'departments' already exists
+mysql> create table departmentss (departments_id int(8),dept_name varchar(45),manager_id int(54),salary int(50),manager_name varchar(60));
+Query OK, 0 rows affected, 3 warnings (0.02 sec)
+
+mysql> insert into departmentss values('01','finance';'001','50000';'kalisa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''001','50000'' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''kalisa')' at line 1
+mysql> insert into departmentss values('01','finance';'200','50000';'kalisa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''200','50000'' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''kalisa')' at line 1
+mysql> insert into departmentss values('01','finance';'200','50000','kalisa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''200','50000','kalisa')' at line 1
+mysql> insert into departmentss values('01','finance';'30','50000','kalisa');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''30','50000','kalisa')' at line 1
+mysql> insert into departmentss values('01','finance','50','5000','kalisa');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departmentss values('02','accounting','40','6000','muhire');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departmentss values('03','procurement','35','8000','gitare');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into departmentss values('04','production','25','2000','sine');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from departmentss;
++----------------+-------------+------------+--------+--------------+
+| departments_id | dept_name   | manager_id | salary | manager_name |
++----------------+-------------+------------+--------+--------------+
+|              1 | finance     |         50 |   5000 | kalisa       |
+|              2 | accounting  |         40 |   6000 | muhire       |
+|              3 | procurement |         35 |   8000 | gitare       |
+|              4 | production  |         25 |   2000 | sine         |
++----------------+-------------+------------+--------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> create table employees (employees_id int(20),employeesFname varchar(30),employeesLname varchar(27), payment int(47),allowance int(50));
+Query OK, 0 rows affected, 3 warnings (0.01 sec)
+
+mysql> create table employees values ('09','ruhire','elie','700','100');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('09','ruhire','elie','700','100')' at line 1
+mysql> create table employees values ('09','ruhire','elie','700','10');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('09','ruhire','elie','700','10')' at line 1
+mysql> create table employees values ('9','ruhire','elie','700','10');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '('9','ruhire','elie','700','10')' at line 1
+mysql> insert into  employees values ('9','ruhire','elie','700','10');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from employees;
++--------------+----------------+----------------+---------+-----------+
+| employees_id | employeesFname | employeesLname | payment | allowance |
++--------------+----------------+----------------+---------+-----------+
+|            9 | ruhire         | elie           |     700 |        10 |
++--------------+----------------+----------------+---------+-----------+
+1 row in set (0.00 sec)
+
+mysql> insert into  employees values ('9','ruhire','elie','700','10');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employees values ('6','gabaga','kinali','400','13');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employees values ('5','gigi','kaka','358','12');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into  employees values ('7','ruti','mama','365','16');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from empolyees;
+ERROR 1146 (42S02): Table 'company.empolyees' doesn't exist
+mysql> select * from employees;
++--------------+----------------+----------------+---------+-----------+
+| employees_id | employeesFname | employeesLname | payment | allowance |
++--------------+----------------+----------------+---------+-----------+
+|            9 | ruhire         | elie           |     700 |        10 |
+|            9 | ruhire         | elie           |     700 |        10 |
+|            6 | gabaga         | kinali         |     400 |        13 |
+|            5 | gigi           | kaka           |     358 |        12 |
+|            7 | ruti           | mama           |     365 |        16 |
++--------------+----------------+----------------+---------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> delete from client_master where employees_id='9';
+ERROR 1146 (42S02): Table 'company.client_master' doesn't exist
+mysql> delete from employees where employees_id='9';
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from employees;
++--------------+----------------+----------------+---------+-----------+
+| employees_id | employeesFname | employeesLname | payment | allowance |
++--------------+----------------+----------------+---------+-----------+
+|            6 | gabaga         | kinali         |     400 |        13 |
+|            5 | gigi           | kaka           |     358 |        12 |
+|            7 | ruti           | mama           |     365 |        16 |
++--------------+----------------+----------------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table emplyees modify column employees_id primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 1
+mysql> alter table employees modify column employees_id primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 1
+mysql> alter table employees modify column employees_id int primary key;
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> alter table departmentss modify column departmentss_id int primary key;
+ERROR 1054 (42S22): Unknown column 'departmentss_id' in 'departmentss'
+mysql> alter table departmentss modify column departments_id int primary key;
+Query OK, 4 rows affected (0.04 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> alter table employees add foreign key(departments_id) references departments(departments_id);
+ERROR 1072 (42000): Key column 'departments_id' doesn't exist in table
+mysql> alter table departments add foreign key(employees_id) references employees(employees_id);
+ERROR 1072 (42000): Key column 'employees_id' doesn't exist in table
+mysql> alter table departments add foreign key(employees_id) references employees(employees_id);
+ERROR 1072 (42000): Key column 'employees_id' doesn't exist in table
+mysql> alter table departments add column employee_id int(45);
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter table departments add foreign key(employees_id) references employees(employees_id);
+ERROR 1072 (42000): Key column 'employees_id' doesn't exist in table
+mysql> alter table employees add foreign key(departments_id) references departments(departments_id);
+ERROR 1072 (42000): Key column 'departments_id' doesn't exist in table
+mysql> desc departments;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| departments_id | int         | YES  |     | NULL    |       |
+| dept_name      | varchar(45) | YES  |     | NULL    |       |
+| manager_id     | int         | YES  |     | NULL    |       |
+| salary         | int         | YES  |     | NULL    |       |
+| employee_id    | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> desc employees;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| employees_id   | int         | NO   | PRI | NULL    |       |
+| employeesFname | varchar(30) | YES  |     | NULL    |       |
+| employeesLname | varchar(27) | YES  |     | NULL    |       |
+| payment        | int         | YES  |     | NULL    |       |
+| allowance      | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table departments modify column departments_id primary key;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'primary key' at line 1
+mysql> alter table departments modify column departments_id int primary key;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>  desc departments;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| departments_id | int         | NO   | PRI | NULL    |       |
+| dept_name      | varchar(45) | YES  |     | NULL    |       |
+| manager_id     | int         | YES  |     | NULL    |       |
+| salary         | int         | YES  |     | NULL    |       |
+| employee_id    | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> alter table employees add foreign key(departments_id) references departments(departments_id);
+ERROR 1072 (42000): Key column 'departments_id' doesn't exist in table
+mysql> alter table departments add foreign key(employees_id) references employees(employees_id);
+ERROR 1072 (42000): Key column 'employees_id' doesn't exist in table
+mysql> alter table departments add foreign key(employee_id) references employees(employee_id);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select employeesFname,allowance,dept_name from employees right outer joint departments on employees.departments_id=departments.departments_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'joint departments on employees.departments_id=departments.departments_id' at line 1
+mysql> select employeesFname,allowance,dept_name from employees right outer joint departments on employees.employee_id=departments.employee_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'joint departments on employees.employee_id=departments.employee_id' at line 1
+mysql> select employeesFname,allowance,dept_name from departments right outer joint departments on employees.employee_id=departments.employee_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'joint departments on employees.employee_id=departments.employee_id' at line 1
+mysql> select employeesFname,allowance,dept_name from departments right outer joint employees on employees.employee_id=departments.employee_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'joint employees on employees.employee_id=departments.employee_id' at line 1
+mysql> select employeesFname,allowance,dept_name from departments right outer joint employees on employees.employee_id=departments.employee_id;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'joint employees on employees.employee_id=departments.employee_id' at line 1
+mysql> use company;
+Database changed
+mysql> create table (studentId int(20),fullnames varchar(45),gender varchar(65),age int(45),department varchar(40));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(studentId int(20),fullnames varchar(45),gender varchar(65),age int(45),departme' at line 1
+mysql> create table student (studentId int(20),fullnames varchar(45),gender varchar(65),age int(45),department varchar(40));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> insert into student values('01','shukurueric','male','23','business');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('02','mutesiscovia','female','21','information');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('03','mutayaalex','male','20','technology');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values('04','kayitesidelise','female','30','accounting');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student:
+    -> select * from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':
+select * from student' at line 1
+mysql> select * from student;
++-----------+----------------+--------+------+-------------+
+| studentId | fullnames      | gender | age  | department  |
++-----------+----------------+--------+------+-------------+
+|         1 | shukurueric    | male   |   23 | business    |
+|         2 | mutesiscovia   | female |   21 | information |
+|         3 | mutayaalex     | male   |   20 | technology  |
+|         4 | kayitesidelise | female |   30 | accounting  |
++-----------+----------------+--------+------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where gender='female';
++-----------+----------------+--------+------+-------------+
+| studentId | fullnames      | gender | age  | department  |
++-----------+----------------+--------+------+-------------+
+|         2 | mutesiscovia   | female |   21 | information |
+|         4 | kayitesidelise | female |   30 | accounting  |
++-----------+----------------+--------+------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where gender='male';
++-----------+-------------+--------+------+------------+
+| studentId | fullnames   | gender | age  | department |
++-----------+-------------+--------+------+------------+
+|         1 | shukurueric | male   |   23 | business   |
+|         3 | mutayaalex  | male   |   20 | technology |
++-----------+-------------+--------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student where age<20;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> desc student;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| studentId  | int         | YES  |     | NULL    |       |
+| fullnames  | varchar(45) | YES  |     | NULL    |       |
+| gender     | varchar(65) | YES  |     | NULL    |       |
+| age        | int         | YES  |     | NULL    |       |
+| department | varchar(40) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> use company;
+Database changed
+mysql> ^C
+mysql>
